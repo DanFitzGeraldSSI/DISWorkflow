@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attributes Management</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Source Attributes Management - Framingham Risk Model</h1>
+        <p>Manage the source attributes for the selected risk model.</p>
+    </div>
+    <div class="attributes-management">
+        <button onclick="goBack()">Back</button>
+        <input type="text" id="search-bar" placeholder="Search attributes..." />
+        <select id="category-filter">
+            <option value="">All Categories</option>
+            <option value="Clinical Data">Clinical Data</option>
+            <option value="Demographics">Demographics</option>
+            <option value="Risk Model Coefficients">Risk Model Coefficients</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attribute Name</th>
+                    <th>Value/Details</th>
+                    <th>Editable</th>
+                    <th>Last Updated</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Example row -->
+                <tr>
+                    <td>Age</td>
+                    <td><input type="text" value="55-84" /></td>
+                    <td><input type="checkbox" checked /></td>
+                    <td>Last Updated: 2024-11-25, 2:30 PM</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+        <div class="actions">
+            <button onclick="showAuditLog()">View Audit Log</button>
+            <button onclick="addNewAttribute()">Add New Attribute</button>
+            <button onclick="saveChanges()">Save Changes</button>
+            <button onclick="resetChanges()">Reset Changes</button>
+            <button onclick="exportAttributes()">Export Attributes</button>
+        </div>
+    </div>
+    <script src="attributes_management.js"></script>
+</body>
+</html>

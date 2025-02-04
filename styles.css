@@ -3,6 +3,7 @@ body {
     margin: 20px;
 }
 .header {
+    text-align: center;
     margin-bottom: 20px;
 }
 .patient-record {
@@ -12,7 +13,8 @@ body {
     margin-bottom: 20px;
 }
 .button {
-    margin-bottom: 20px;
+    text-align: center;
+    margin-top: 20px;
 }
 table {
     width: 100%;
@@ -25,4 +27,82 @@ th, td {
 }
 th {
     background-color: #f2f2f2;
+}
+
+.risk-table, .dsi-feedback {
+    width: 80%;
+    margin: 0 auto;
+}
+
+.risk-table table, .dsi-feedback table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.risk-table th, .risk-table td, .dsi-feedback th, .dsi-feedback td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+.risk-table th, .dsi-feedback th {
+    background-color: #00356b; /* Yale Blue */
+    color: white;
+}
+
+.risk-table tr:nth-child(even), .dsi-feedback tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.risk-table tr:hover, .dsi-feedback tr:hover {
+    background-color: #ddd;
+}
+
+.risk-table th, .dsi-feedback th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+}
+
+.button button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #00356b; /* Yale Blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.button button:hover {
+    background-color: #002a4d; /* Darker Yale Blue */
+}
+
+.actions {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.actions button {
+    margin: 5px;
+    padding: 10px 20px;
+    background-color: #00356b; /* Yale Blue */
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+.actions button:hover {
+    background-color: #002a4d; /* Darker Yale Blue */
+}
+
+textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+}
+
+#timestamp {
+    text-align: right;
+    margin-top: 20px;
+    font-style: italic;
 }

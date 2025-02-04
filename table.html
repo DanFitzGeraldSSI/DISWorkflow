@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Table</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>DSI Activation Dashboard</h1>
+            <h2>Select Risk Analysis</h2>
+    </div>
+    <div class="risk-table">
+        <table>
+            <thead>
+                <tr>
+                    <th>Activate</th>
+                    <th>Risk Status</th>
+                    <th>Risk Analyzer Name</th>
+                    <th>Intervention Description</th>
+                    <th>Risk Category</th>
+                    <th>Age Range</th>
+                    <th>Sex</th>
+                    <th>Attributes to Calculate</th>
+                    <th>Last Updated</th>
+                    <th>DSI Feedback</th>
+                    <th>Audit</th>
+                </tr>
+                <tr>
+                    <th><input type="checkbox" id="filter-activate" /></th>
+                    <th></th>
+                    <th><input type="text" id="filter-analyzer-name" placeholder="Filter by name" /></th>
+                    <th></th>
+                    <th>
+                        <select id="filter-risk-category">
+                            <option value="">All</option>
+                            <option value="Low">Low (0-9)</option>
+                            <option value="Medium">Medium (10-19)</option>
+                            <option value="High">High (>20)</option>
+                        </select>
+                    </th>
+                    <th><input type="text" id="filter-age-range" placeholder="Filter by age" /></th>
+                    <th>
+                        <select id="filter-sex">
+                            <option value="">All</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+                    </th>
+                    <th></th>
+                    <th><input type="date" id="filter-last-updated" /></th>
+                    <th></th>
+                    <th><input type="text" id="filter-audit" placeholder="Filter by audit" /></th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- ...existing code... -->
+                <tr>
+                    <td><input type="checkbox" name="activation" /></td>
+                    <td>Inactive</td>
+                    <td>Stroke</td>
+                    <td>Alerts providers with red indicator identifying a patient at high risk</td>
+                    <td>Low (0-9)</td>
+                    <td>60-80</td>
+                    <td>Male</td>
+                    <td>
+                        Age 55-84, Sex Any, Smoking, CVD, DM, LVH
+                        <button onclick="manageAttributes('Stroke')">Manage</button>
+                    </td>
+                    <td><!-- Last Updated Date --></td>
+                    <td><button onclick="navigateToDSIFeedback('Stroke')">DSI Feedback</button></td>
+                    <td><button onclick="showAuditLog('Stroke')">View Audit Log</button></td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="activation" /></td>
+                    <td>Active</td>
+                    <td>Diabetes</td>
+                    <td>Description 5</td>
+                    <td>High (>20)</td>
+                    <td>60-80</td>
+                    <td>Male</td>
+                    <td>
+                        Attribute 9, Attribute 10
+                        <button onclick="manageAttributes('Diabetes')">Manage</button>
+                    </td>
+                    <td><!-- Last Updated Date --></td>
+                    <td><button onclick="navigateToDSIFeedback('Diabetes')">DSI Feedback</button></td>
+                    <td><button onclick="showAuditLog('Diabetes')">View Audit Log</button></td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="11">
+                        <div id="activation-summary" style="display: flex; justify-content: space-between; align-items: center;">
+                            <div>
+                                <h3>Activation Summary</h3>
+                                Active Predictive DSI: <span id="active-dsi-count">0</span>
+                            </div>
+                            <button onclick="exportActiveDSIs()">Export Active DSIs</button>
+                        </div>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+        <button onclick="returnToPatientRecord()">Return to Patient Record</button>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

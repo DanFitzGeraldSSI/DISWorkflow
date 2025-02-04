@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DSI Feedback</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>DSI Feedback - Framingham Risk Assessment: 10-year CHD Risk: 15%</h1>
+    </div>
+    <div class="dsi-feedback">
+        <p>10-year Risk: 15%, Category: Moderate</p>
+        <table>
+            <thead>
+                <tr>
+                    <th>Risk Inputs</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Age</td>
+                    <td>55</td>
+                </tr>
+                <tr>
+                    <td>Cholesterol</td>
+                    <td>240 mg/dL</td>
+                </tr>
+                <tr>
+                    <td>BP</td>
+                    <td>140 mmHg</td>
+                </tr>
+                <tr>
+                    <td>Smoker</td>
+                    <td>Yes</td>
+                </tr>
+                <tr>
+                    <td>HDL</td>
+                    <td>45 mg/dL</td>
+                </tr>
+            </tbody>
+        </table>
+        <label for="decision-taken">Decision Taken:</label>
+        <select id="decision-taken">
+            <option value="Prescribe Statin">Prescribe Statin</option>
+            <option value="Schedule Follow-up">Schedule Follow-up</option>
+            <option value="Order Additional Labs">Order Additional Labs</option>
+            <option value="No Action">No Action</option>
+        </select>
+        <label for="reason-for-decision">Reason for Decision:</label>
+        <textarea id="reason-for-decision"></textarea>
+        <p>Alert Triggered By: Risk Threshold: >20% CHD Risk (10-year)</p>
+        <label for="clinician-comments">Clinician Comments:</label>
+        <textarea id="clinician-comments"></textarea>
+        <label for="intervention-outcome">Intervention Outcome:</label>
+        <select id="intervention-outcome">
+            <option value="Risk Reduced">Risk Reduced</option>
+            <option value="Condition Stabilized">Condition Stabilized</option>
+            <option value="No Change">No Change</option>
+            <option value="Escalated Care">Escalated Care</option>
+        </select>
+        <button onclick="exportFeedback()">Export Feedback</button>
+        <button onclick="saveFeedback()">Save Feedback</button>
+        <button onclick="window.location.href='table.html'">Return to DSI Activation Screen</button>
+        <p id="timestamp">Logged on: <!-- Auto-populated date and time --></p>
+    </div>
+    <script src="dsi_feedback.js"></script>
+</body>
+</html>
