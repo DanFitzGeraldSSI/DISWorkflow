@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monitoring and Maintenance</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Monitoring and Maintenance - Framingham Risk Model</h1>
+        <p>Manage the monitoring and maintenance of the selected risk model.</p>
+    </div>
+    <div class="monitoring-maintenance">
+        <p>Risk Threshold Review Status: <span class="badge">Review Pending</span></p>
+        <label for="review-cycle">Review Cycle Settings:</label>
+        <select id="review-cycle">
+            <option value="6 months">6 months</option>
+            <option value="1 year">1 year</option>
+        </select>
+        <table>
+            <thead>
+                <tr>
+                    <th>Risk Category</th>
+                    <th>Low Threshold</th>
+                    <th>High Threshold</th>
+                    <th>Last Updated</th>
+                    <th>Review Due</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>High Risk</td>
+                    <td><input type="text" id="high-risk-low" value="20%" /></td>
+                    <td><input type="text" id="high-risk-high" value="100%" /></td>
+                    <td>2024-11-15</td>
+                    <td>Review Due: 2025-05-15</td>
+                </tr>
+                <tr>
+                    <td>Medium Risk</td>
+                    <td><input type="text" id="medium-risk-low" value="10%" /></td>
+                    <td><input type="text" id="medium-risk-high" value="19%" /></td>
+                    <td>2024-11-15</td>
+                    <td>Review Due: 2025-05-15</td>
+                </tr>
+                <tr>
+                    <td>Low Risk</td>
+                    <td><input type="text" id="low-risk-low" value="0%" /></td>
+                    <td><input type="text" id="low-risk-high" value="9%" /></td>
+                    <td>2024-11-15</td>
+                    <td>Review Due: 2025-05-15</td>
+                </tr>
+            </tbody>
+        </table>
+        <div class="charts">
+            <div id="performance-trends" class="chart">Performance Trends Chart</div>
+            <div id="outcome-monitoring-summary" class="chart">Outcome Monitoring Summary Chart</div>
+        </div>
+        <div class="alerts">
+            <p>Alerts for Maintenance Actions: <span class="badge">Risk threshold review overdue for Moderate Risk (last updated >1 year ago).</span></p>
+        </div>
+        <div class="actions">
+            <button onclick="showMaintenanceHistory()">Maintenance History Log</button>
+            <button onclick="adjustRiskThresholds()">Adjust Risk Thresholds</button>
+            <button onclick="addMonitoringMetrics()">Add Monitoring Metrics</button>
+            <button onclick="exportMaintenanceReport()">Export Maintenance Report</button>
+        </div>
+        <div class="filters">
+            <label for="population-group-filters">Population Group Filters:</label>
+            <select id="population-group-filters">
+                <option value="">All</option>
+                <option value="Age >60">Age >60</option>
+                <option value="Gender: Female">Gender: Female</option>
+            </select>
+        </div>
+        <p>Next Scheduled Review: 2025-05-01</p>
+        <div class="actions">
+            <button onclick="saveUpdates()">Save Updates</button>
+            <button onclick="revertChanges()">Revert Changes</button>
+        </div>
+        <button onclick="returnToDSIActivationScreen()">Return to DSI Activation Screen</button>
+    </div>
+    <script src="monitoring.js"></script>
+</body>
+</html>

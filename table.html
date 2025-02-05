@@ -25,21 +25,14 @@
                     <th>Attributes to Calculate</th>
                     <th>Last Updated</th>
                     <th>DSI Feedback</th>
-                    <th>Audit</th>
+                    <th>Audit & Maintenance</th>
                 </tr>
                 <tr>
                     <th><input type="checkbox" id="filter-activate" /></th>
                     <th></th>
                     <th><input type="text" id="filter-analyzer-name" placeholder="Filter by name" /></th>
                     <th></th>
-                    <th>
-                        <select id="filter-risk-category">
-                            <option value="">All</option>
-                            <option value="Low">Low (0-9)</option>
-                            <option value="Medium">Medium (10-19)</option>
-                            <option value="High">High (>20)</option>
-                        </select>
-                    </th>
+                    <th></th>
                     <th><input type="text" id="filter-age-range" placeholder="Filter by age" /></th>
                     <th>
                         <select id="filter-sex">
@@ -61,7 +54,10 @@
                     <td>Inactive</td>
                     <td>Stroke</td>
                     <td>Alerts providers with red indicator identifying a patient at high risk</td>
-                    <td>Low (0-9)</td>
+                    <td>
+                        Low (0-9)
+                        <button onclick="navigateToRiskManagementSummary('Stroke')">Risk Management Summary</button>
+                    </td>
                     <td>60-80</td>
                     <td>Male</td>
                     <td>
@@ -70,14 +66,20 @@
                     </td>
                     <td><!-- Last Updated Date --></td>
                     <td><button onclick="navigateToDSIFeedback('Stroke')">DSI Feedback</button></td>
-                    <td><button onclick="showAuditLog('Stroke')">View Audit Log</button></td>
+                    <td>
+                        <button onclick="showAuditLog('Stroke')">View Audit Log</button>
+                        <button onclick="navigateToMonitoring('Stroke')">Monitoring & Maintenance</button>
+                    </td>
                 </tr>
                 <tr>
                     <td><input type="checkbox" name="activation" /></td>
                     <td>Active</td>
                     <td>Diabetes</td>
                     <td>Description 5</td>
-                    <td>High (>20)</td>
+                    <td>
+                        High (>20)
+                        <button onclick="navigateToRiskManagementSummary('Diabetes')">Risk Management Summary</button>
+                    </td>
                     <td>60-80</td>
                     <td>Male</td>
                     <td>
@@ -86,7 +88,10 @@
                     </td>
                     <td><!-- Last Updated Date --></td>
                     <td><button onclick="navigateToDSIFeedback('Diabetes')">DSI Feedback</button></td>
-                    <td><button onclick="showAuditLog('Diabetes')">View Audit Log</button></td>
+                    <td>
+                        <button onclick="showAuditLog('Diabetes')">View Audit Log</button>
+                        <button onclick="navigateToMonitoring('Diabetes')">Monitoring & Maintenance</button>
+                    </td>
                 </tr>
             </tbody>
             <tfoot>
@@ -103,7 +108,7 @@
                 </tr>
             </tfoot>
         </table>
-        <button onclick="returnToPatientRecord()">Return to Patient Record</button>
+        <button onclick="window.location.href='table.html'">Return to Patient Record</button>
     </div>
     <script src="script.js"></script>
 </body>

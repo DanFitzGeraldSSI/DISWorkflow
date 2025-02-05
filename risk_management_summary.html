@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risk Management Summary</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="header">
+        <h1>Risk Management Summary</h1>
+        <p>Summary of risk management for the selected patient.</p>
+    </div>
+    <div class="risk-management-summary">
+        <div class="summary-cards">
+            <div class="card">
+                <h3>High Risk >20%</h3>
+                <p>Total Patients: 50</p>
+                <p>Action Taken: <span class="badge">Medication Initiated</span></p>
+                <p>Pending Actions: <span class="badge">15 follow-ups scheduled</span></p>
+            </div>
+            <div class="card">
+                <h3>Moderate Risk 10%-20%</h3>
+                <p>Total Patients: 100</p>
+                <p>Action Taken: <span class="badge">Follow-ups Scheduled</span></p>
+                <p>Pending Actions: <span class="badge">30 follow-ups scheduled</span></p>
+            </div>
+            <div class="card">
+                <h3>Low Risk <10%</h3>
+                <p>Total Patients: 300</p>
+                <p>Action Taken: <span class="badge">No Action</span></p>
+                <p>Pending Actions: <span class="badge">None</span></p>
+            </div>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metric Name</th>
+                    <th>Value</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Percentage of patients at high risk receiving intervention</td>
+                    <td>80%</td>
+                    <td>Patients flagged as high risk and prescribed medication.</td>
+                </tr>
+                <!-- Add more rows as needed -->
+            </tbody>
+        </table>
+        <div class="collapsible-section">
+            <h3>Bias and Limitations</h3>
+            <p>Underestimation in younger patients due to limited cohort representation.</p>
+        </div>
+        <div class="charts">
+            <div id="patient-distribution-chart" class="chart">Patient Distribution Chart</div>
+            <div id="intervention-overview" class="chart">Intervention Overview Chart</div>
+        </div>
+        <div class="actions">
+            <button onclick="exportSummary()">Export Summary</button>
+            <button onclick="showAuditLog()">Audit Log</button>
+            <button onclick="adjustThresholds()">Threshold Adjustment</button>
+        </div>
+        <div class="filters">
+            <label for="demographic-filters">Filter by Demographics:</label>
+            <select id="demographic-filters">
+                <option value="">All</option>
+                <option value="Age > 60">Age > 60</option>
+                <option value="Gender: Male">Gender: Male</option>
+            </select>
+        </div>
+        <div class="actions">
+            <button onclick="saveChanges()">Save Changes</button>
+            <button onclick="resetChanges()">Reset Changes</button>
+        </div>
+        <button onclick="returnToDashboard()">Return to Dashboard</button>
+    </div>
+    <script src="risk_management_summary.js"></script>
+</body>
+</html>
