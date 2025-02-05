@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Patent Dashboard</title>
+    <title>Patient Dashboard</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -11,12 +11,45 @@
         <h1>Dashboard</h1>
     </div>
     <div class="patient-record">
-        <h2>Pretend Patient Record: Lucy Ricardo</h2>
-        <p>Age: 65</p>
-        <p>Sex: Female</p>
+        <div class="patient-info">
+            <h2>Pretend Patient Record: Lucy Ricardo</h2>
+            <p>Age: <input type="text" id="age" value="65" /></p>
+            <p>Sex: 
+                <label class="switch">
+                    <input type="checkbox" id="sex" checked>
+                    <span class="slider round"></span>
+                </label>
+            </p>
+        </div>
+        <div class="button">
+            <button id="viewTableButton" onclick="location.href='table.html'">Activate DSI</button>
+        </div>
     </div>
-    <div class="button">
-        <button id="viewTableButton" onclick="location.href='table.html'">Activate DSI</button>
+    <div class="patient-values-container">
+        <div class="patient-values">
+            <h3>Vital Signs</h3>
+            <p>Temp: <input type="text" id="temp" value="98.6°F" /></p>
+            <p>SBP: <input type="text" id="sbp" value="120 mmHg" /></p>
+            <p>BP: <input type="text" id="bp" value="120/80 mmHg" /></p>
+            <p>Pulse: <input type="text" id="pulse" value="70 bpm" /></p>
+        </div>
+        <div class="patient-values">
+            <h3>Problem List</h3>
+            <p>Diagnosis: <input type="text" id="diagnosis" value="Hypertension" /></p>
+        </div>
+        <div class="patient-values">
+            <h3>Social History</h3>
+            <p>Smoking: <input type="text" id="smoking" value="Non-smoker" /></p>
+        </div>
+        <div class="patient-values">
+            <h3>Medical History</h3>
+            <p>Diagnosis: <input type="text" id="medical-diagnosis" value="Diabetes" /></p>
+        </div>
+        <div class="patient-values">
+            <h3>BMI</h3>
+            <p>Height: <input type="text" id="height" value="65 inches" /></p>
+            <p>Weight: <input type="text" id="weight" value="150 lbs" /></p>
+        </div>
     </div>
     <script src="index.js"></script>
 </body>

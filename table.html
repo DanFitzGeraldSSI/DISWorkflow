@@ -32,7 +32,14 @@
                     <th></th>
                     <th><input type="text" id="filter-analyzer-name" placeholder="Filter by name" /></th>
                     <th></th>
-                    <th></th>
+                    <th>
+                        <select id="filter-risk-category">
+                            <option value="">All</option>
+                            <option value="Low">Low (0-9)</option>
+                            <option value="Medium">Medium (10-19)</option>
+                            <option value="High">High (>20)</option>
+                        </select>
+                    </th>
                     <th><input type="text" id="filter-age-range" placeholder="Filter by age" /></th>
                     <th>
                         <select id="filter-sex">
@@ -54,10 +61,7 @@
                     <td>Inactive</td>
                     <td>Stroke</td>
                     <td>Alerts providers with red indicator identifying a patient at high risk</td>
-                    <td>
-                        Low (0-9)
-                        <button onclick="navigateToRiskManagementSummary('Stroke')">Risk Management Summary</button>
-                    </td>
+                    <td>Low (0-9)</td>
                     <td>60-80</td>
                     <td>Male</td>
                     <td>
@@ -76,10 +80,7 @@
                     <td>Active</td>
                     <td>Diabetes</td>
                     <td>Description 5</td>
-                    <td>
-                        High (>20)
-                        <button onclick="navigateToRiskManagementSummary('Diabetes')">Risk Management Summary</button>
-                    </td>
+                    <td>High (>20)</td>
                     <td>60-80</td>
                     <td>Male</td>
                     <td>

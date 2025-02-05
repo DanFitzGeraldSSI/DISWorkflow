@@ -71,15 +71,10 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = `monitoring.html?analyzer=${encodeURIComponent(riskAnalyzerName)}`;
     }
 
-    function navigateToRiskManagementSummary(riskAnalyzerName) {
-        window.location.href = `risk_management_summary.html?analyzer=${encodeURIComponent(riskAnalyzerName)}`;
-    }
-
     window.showAuditLog = showAuditLog;
     window.exportActiveDSIs = exportActiveDSIs;
     window.manageAttributes = manageAttributes;
     window.returnToPatientRecord = returnToPatientRecord;
     window.navigateToDSIFeedback = navigateToDSIFeedback;
     window.navigateToMonitoring = navigateToMonitoring;
-    window.navigateToRiskManagementSummary = navigateToRiskManagementSummary;
 });
