@@ -67,6 +67,12 @@ function updateVentricularHypertrophyLabel() {
     label.textContent = checkbox.checked ? 'Yes' : 'No';
 }
 
+function updateStrokeIschemicAttackLabel() {
+    const checkbox = document.getElementById('stroke-ischemic-attack');
+    const label = document.getElementById('stroke-ischemic-attack-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
 function displayActivatedAnalyzers() {
     const analyzersContainer = document.getElementById('analyzers-container');
     analyzersContainer.innerHTML = ''; // Clear existing content
@@ -89,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCardiovascularDiseaseLabel();
     updateAtrialFibrillationLabel();
     updateVentricularHypertrophyLabel();
+    updateStrokeIschemicAttackLabel();
     displayActivatedAnalyzers();
 
     document.getElementById('diabetes').addEventListener('change', updateDiabetesLabel);
@@ -98,4 +105,5 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('cardiovascular-disease').addEventListener('change', updateCardiovascularDiseaseLabel);
     document.getElementById('atrial-fibrillation').addEventListener('change', updateAtrialFibrillationLabel);
     document.getElementById('ventricular-hypertrophy').addEventListener('change', updateVentricularHypertrophyLabel);
+    document.getElementById('stroke-ischemic-attack').addEventListener('change', updateStrokeIschemicAttackLabel);
 });

@@ -16,7 +16,6 @@
             <thead>
                 <tr>
                     <th>Activate</th>
-                    <th>Risk Status</th>
                     <th>Risk Analyzer Name</th>
                     <th>Intervention Description</th>
                     <th>Risk Category</th>
@@ -27,43 +26,19 @@
                     <th>DSI Feedback</th>
                     <th>Audit & Maintenance</th>
                 </tr>
-                <tr>
-                    <th><input type="checkbox" id="filter-activate" /></th>
-                    <th></th>
-                    <th><input type="text" id="filter-analyzer-name" placeholder="Filter by name" /></th>
-                    <th></th>
-                    <th>
-                        <select id="filter-risk-category">
-                            <option value="">All</option>
-                            <option value="Low">Low (0-9)</option>
-                            <option value="Medium">Medium (10-19)</option>
-                            <option value="High">High (>20)</option>
-                        </select>
-                    </th>
-                    <th><input type="text" id="filter-age-range" placeholder="Filter by age" /></th>
-                    <th>
-                        <select id="filter-sex">
-                            <option value="">All</option>
-                            <option value="Male">Male</option>
-                            <option value="Female">Female</option>
-                        </select>
-                    </th>
-                    <th></th>
-                    <th><input type="date" id="filter-last-updated" /></th>
-                    <th></th>
-                    <th><input type="text" id="filter-audit" placeholder="Filter by audit" /></th>
-                </tr>
             </thead>
             <tbody>
-                <!-- ...existing code... -->
-                <tr>
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Stroke', 'Low (0-9)')" /></td>
-                    <td class="risk-status">Inactive</td>
-                    <td>Stroke</td>
-                    <td>Alerts providers with red indicator identifying a patient at high risk</td>
-                    <td>Low (0-9)</td>
-                    <td>60-80</td>
-                    <td>Male</td>
+                <!-- Display rows regardless of activation status -->
+                <tr class="risk-analyzer-row" data-active="false">
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Probability of Stroke Within 10 Years')" /></td>
+                    <td>Probability of Stroke Within 10 Years</td>
+                    <td>Alerts provider when the patient is at high risk for Stroke</td>
+                    <td>
+                        Low (0-9)<br> Med (10-19)<br> High (>20)
+                        <button onclick="navigateToRiskManagement('Stroke')">Risk Management</button>
+                    </td>
+                    <td>54-72</td>
+                    <td>Male<br> Female</td>
                     <td>
                         Age 55-84, Sex Any, Smoking, CVD, DM, LVH
                         <button onclick="manageAttributes('Stroke')">Manage</button>
@@ -75,12 +50,14 @@
                         <button onclick="navigateToMonitoring('Stroke')">Monitoring & Maintenance</button>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Diabetes', 'High (>20)')" /></td>
-                    <td class="risk-status">Inactive</td>
+                <tr class="risk-analyzer-row" data-active="false">
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Diabetes')" /></td>
                     <td>Diabetes</td>
                     <td>Description 5</td>
-                    <td>High (>20)</td>
+                    <td>
+                        High (>20)
+                        <button onclick="navigateToRiskManagement('Diabetes')">Risk Management</button>
+                    </td>
                     <td>60-80</td>
                     <td>Male</td>
                     <td>
@@ -94,12 +71,14 @@
                         <button onclick="navigateToMonitoring('Diabetes')">Monitoring & Maintenance</button>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Hypertension', 'Medium (10-19)')" /></td>
-                    <td class="risk-status">Inactive</td>
+                <tr class="risk-analyzer-row" data-active="false">
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Hypertension')" /></td>
                     <td>Hypertension</td>
                     <td>Description 3</td>
-                    <td>Medium (10-19)</td>
+                    <td>
+                        Medium (10-19)
+                        <button onclick="navigateToRiskManagement('Hypertension')">Risk Management</button>
+                    </td>
                     <td>50-70</td>
                     <td>Female</td>
                     <td>
@@ -113,12 +92,14 @@
                         <button onclick="navigateToMonitoring('Hypertension')">Monitoring & Maintenance</button>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Obesity', 'Low (0-9)')" /></td>
-                    <td class="risk-status">Inactive</td>
+                <tr class="risk-analyzer-row" data-active="false">
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Obesity')" /></td>
                     <td>Obesity</td>
                     <td>Description 4</td>
-                    <td>Low (0-9)</td>
+                    <td>
+                        Low (0-9)
+                        <button onclick="navigateToRiskManagement('Obesity')">Risk Management</button>
+                    </td>
                     <td>30-50</td>
                     <td>Male</td>
                     <td>
@@ -135,7 +116,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="11">
+                    <td colspan="10">
                         <div id="activation-summary" style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <h3>Activation Summary</h3>
@@ -148,11 +129,67 @@
             </tfoot>
         </table>
         <button onclick="returnToPatientRecord()">Return to Patient Record</button>
+        <button onclick="resetToDefaults()">Reset to Defaults</button>
     </div>
     <script src="script.js"></script>
     <script>
         function returnToPatientRecord() {
             window.location.href = 'index.html';
+        }
+
+        // Function to toggle the activation status and update localStorage
+        function toggleActivation(checkbox, analyzerName) {
+            const row = checkbox.closest('.risk-analyzer-row');
+            row.dataset.active = checkbox.checked;
+            updateActivatedAnalyzers(analyzerName, checkbox.checked);
+        }
+
+        // Function to update the activated analyzers in localStorage
+        function updateActivatedAnalyzers(analyzerName, isActive) {
+            let activatedAnalyzers = JSON.parse(localStorage.getItem('activatedAnalyzers')) || [];
+            if (isActive) {
+                if (!activatedAnalyzers.includes(analyzerName)) {
+                    activatedAnalyzers.push(analyzerName);
+                }
+            } else {
+                activatedAnalyzers = activatedAnalyzers.filter(analyzer => analyzer !== analyzerName);
+            }
+            localStorage.setItem('activatedAnalyzers', JSON.stringify(activatedAnalyzers));
+        }
+
+        // Function to reset all checkboxes to default (unchecked)
+        function resetToDefaults() {
+            document.querySelectorAll('.risk-analyzer-row input[type="checkbox"]').forEach(checkbox => {
+                checkbox.checked = false;
+                toggleActivation(checkbox, checkbox.closest('.risk-analyzer-row').querySelector('td:nth-child(2)').textContent);
+            });
+        }
+
+        // Initial call to set the visibility based on the current state
+        document.querySelectorAll('.risk-analyzer-row').forEach(row => {
+            row.style.display = '';
+        });
+
+        // Functions for button actions
+        function manageAttributes(analyzerName) {
+            window.location.href = 'attributes_management.html';
+        }
+
+        function navigateToDSIFeedback(analyzerName) {
+            window.location.href = 'dsi_feedback.html';
+        }
+
+        function showAuditLog(analyzerName) {
+            // Open audit log in a pop-out window
+            window.open('audit_log.html', 'Audit Log', 'width=800,height=600');
+        }
+
+        function navigateToMonitoring(analyzerName) {
+            window.location.href = 'monitoring.html';
+        }
+
+        function navigateToRiskManagement(analyzerName) {
+            window.location.href = 'risk_management_summary.html';
         }
     </script>
 </body>

@@ -26,10 +26,6 @@
             <button id="viewTableButton" onclick="location.href='table.html'">Activate DSI</button>
         </div>
     </div>
-    <div class="activated-analyzers">
-        <h3>Activated Risk Analyzers</h3>
-        <div id="analyzers-container"></div>
-    </div>
     <div class="patient-values-container">
         <div class="patient-values">
             <h3>Vital Signs</h3>
@@ -38,14 +34,10 @@
             <p>BP: <input type="text" id="bp" value="120/80 mmHg" /></p>
             <p>Pulse: <input type="text" id="pulse" value="70 bpm" /></p>
             <p>PR Interval: <input type="text" id="pr-interval" value="200" /></p>
-        </div>
-        <div class="patient-values">
-            <h3>Problem List</h3>
-            <p>Diagnosis: <input type="text" id="diagnosis" value="Hypertension" /></p>
-        </div>
-        <div class="patient-values">
-            <h3>Social History</h3>
-            <p>Smoking: <input type="text" id="smoking" value="Non-smoker" /></p>
+            <h4>BMI</h4>
+            <p>Height: <input type="text" id="height" value="65 inches" oninput="calculateBMI()" /></p>
+            <p>Weight: <input type="text" id="weight" value="150 lbs" oninput="calculateBMI()" /></p>
+            <p>BMI: <span id="bmi">24.96</span></p>
         </div>
         <div class="patient-values">
             <h3>Medical History</h3>
@@ -93,7 +85,17 @@
                 </label>
                 <span id="diabetes-label">No</span>
             </p>
-            <p>Use of Hypertension Medications: 
+            <p>Prior Stroke or Ischemic Attack: 
+                <label class="switch">
+                    <input type="checkbox" id="stroke-ischemic-attack" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="stroke-ischemic-attack-label">No</span>
+            </p>
+        </div>
+        <div class="patient-values">
+            <h3>Medication Use</h3>
+            <p>Hypertension Meds: 
                 <label class="switch">
                     <input type="checkbox" id="hypertension-medications" />
                     <span class="slider round"></span>
@@ -102,12 +104,155 @@
             </p>
         </div>
         <div class="patient-values">
-            <h3>BMI</h3>
-            <p>Height: <input type="text" id="height" value="65 inches" oninput="calculateBMI()" /></p>
-            <p>Weight: <input type="text" id="weight" value="150 lbs" oninput="calculateBMI()" /></p>
-            <p>BMI: <span id="bmi">24.96</span></p>
+            <h3>Diagnostic Results</h3>
+            <p>Triglyceride level: <input type="text" id="triglyceride-level" placeholder="____ mg/dL" /></p>
+            <p>Fasting glucose level: <input type="text" id="fasting-glucose-level" placeholder="____ mg/dL" /></p>
+            <p>HDL-C level: <input type="text" id="hdl-c-level" placeholder="____ mg/dL" /></p>
+        </div>
+        <div class="patient-values">
+            <h3>Social History</h3>
+            <p>Smoking: 
+                <label class="switch">
+                    <input type="checkbox" id="smoking" onchange="updateSmokingLabel()">
+                    <span class="slider round"></span>
+                </label>
+                <span id="smoking-label">Non-smoker</span>
+            </p>
         </div>
     </div>
+    <button onclick="resetToDefaults()">Reset to Defaults</button>
     <script src="index.js"></script>
+    <script>
+        // Function to update the activated analyzers list
+        function updateActivatedAnalyzers() {
+            const analyzersContainer = document.getElementById('analyzers-container');
+            const activatedAnalyzers = JSON.parse(localStorage.getItem('activatedAnalyzers')) || [];
+            analyzersContainer.innerHTML = '';
+
+            if (activatedAnalyzers.length === 0) {
+                const noAnalyzersElement = document.createElement('p');
+                noAnalyzersElement.textContent = 'No activated risk analyzers.';
+                analyzersContainer.appendChild(noAnalyzersElement);
+            } else {
+                activatedAnalyzers.forEach(analyzer => {
+                    const analyzerElement = document.createElement('p');
+                    analyzerElement.textContent = analyzer;
+                    analyzersContainer.appendChild(analyzerElement);
+                });
+            }
+        }
+
+        // Initial call to populate the activated analyzers list
+        updateActivatedAnalyzers();
+
+        function updateSmokingLabel() {
+            const smokingCheckbox = document.getElementById('smoking');
+            const smokingLabel = document.getElementById('smoking-label');
+            smokingLabel.textContent = smokingCheckbox.checked ? 'Smoker' : 'Non-smoker';
+        }
+
+        // Function to reset all fields to their default values
+        function resetToDefaults() {
+            document.getElementById('age').value = '65';
+            document.getElementById('sex').checked = true;
+            updateSexLabel();
+            document.getElementById('temp').value = '98.6°F';
+            document.getElementById('sbp').value = '120 mmHg';
+            document.getElementById('bp').value = '120/80 mmHg';
+            document.getElementById('pulse').value = '70 bpm';
+            document.getElementById('pr-interval').value = '200';
+            document.getElementById('height').value = '65 inches';
+            document.getElementById('weight').value = '150 lbs';
+            document.getElementById('bmi').textContent = '24.96';
+            document.getElementById('atrial-fibrillation').checked = false;
+            document.getElementById('ventricular-hypertrophy').checked = false;
+            document.getElementById('heart-failure').checked = false;
+            document.getElementById('cardiovascular-disease').checked = false;
+            document.getElementById('significant-murmur').checked = false;
+            document.getElementById('diabetes').checked = false;
+            document.getElementById('stroke-ischemic-attack').checked = false;
+            document.getElementById('hypertension-medications').checked = false;
+            document.getElementById('triglyceride-level').value = '';
+            document.getElementById('fasting-glucose-level').value = '';
+            document.getElementById('hdl-c-level').value = '';
+            document.getElementById('smoking').checked = false;
+            updateSmokingLabel();
+            localStorage.removeItem('patientState');
+        }
+
+        function updateSexLabel() {
+            const sexCheckbox = document.getElementById('sex');
+            const sexLabel = document.getElementById('sex-label');
+            sexLabel.textContent = sexCheckbox.checked ? 'Male' : 'Female';
+        }
+
+        // Function to save the current state to localStorage
+        function saveState() {
+            const state = {
+                age: document.getElementById('age').value,
+                sex: document.getElementById('sex').checked,
+                temp: document.getElementById('temp').value,
+                sbp: document.getElementById('sbp').value,
+                bp: document.getElementById('bp').value,
+                pulse: document.getElementById('pulse').value,
+                prInterval: document.getElementById('pr-interval').value,
+                height: document.getElementById('height').value,
+                weight: document.getElementById('weight').value,
+                bmi: document.getElementById('bmi').textContent,
+                atrialFibrillation: document.getElementById('atrial-fibrillation').checked,
+                ventricularHypertrophy: document.getElementById('ventricular-hypertrophy').checked,
+                heartFailure: document.getElementById('heart-failure').checked,
+                cardiovascularDisease: document.getElementById('cardiovascular-disease').checked,
+                significantMurmur: document.getElementById('significant-murmur').checked,
+                diabetes: document.getElementById('diabetes').checked,
+                strokeIschemicAttack: document.getElementById('stroke-ischemic-attack').checked,
+                hypertensionMedications: document.getElementById('hypertension-medications').checked,
+                triglycerideLevel: document.getElementById('triglyceride-level').value,
+                fastingGlucoseLevel: document.getElementById('fasting-glucose-level').value,
+                hdlCLevel: document.getElementById('hdl-c-level').value,
+                smoking: document.getElementById('smoking').checked
+            };
+            localStorage.setItem('patientState', JSON.stringify(state));
+        }
+
+        // Function to load the state from localStorage
+        function loadState() {
+            const state = JSON.parse(localStorage.getItem('patientState'));
+            if (state) {
+                document.getElementById('age').value = state.age;
+                document.getElementById('sex').checked = state.sex;
+                updateSexLabel();
+                document.getElementById('temp').value = state.temp;
+                document.getElementById('sbp').value = state.sbp;
+                document.getElementById('bp').value = state.bp;
+                document.getElementById('pulse').value = state.pulse;
+                document.getElementById('pr-interval').value = state.prInterval;
+                document.getElementById('height').value = state.height;
+                document.getElementById('weight').value = state.weight;
+                document.getElementById('bmi').textContent = state.bmi;
+                document.getElementById('atrial-fibrillation').checked = state.atrialFibrillation;
+                document.getElementById('ventricular-hypertrophy').checked = state.ventricularHypertrophy;
+                document.getElementById('heart-failure').checked = state.heartFailure;
+                document.getElementById('cardiovascular-disease').checked = state.cardiovascularDisease;
+                document.getElementById('significant-murmur').checked = state.significantMurmur;
+                document.getElementById('diabetes').checked = state.diabetes;
+                document.getElementById('stroke-ischemic-attack').checked = state.strokeIschemicAttack;
+                document.getElementById('hypertension-medications').checked = state.hypertensionMedications;
+                document.getElementById('triglyceride-level').value = state.triglycerideLevel;
+                document.getElementById('fasting-glucose-level').value = state.fastingGlucoseLevel;
+                document.getElementById('hdl-c-level').value = state.hdlCLevel;
+                document.getElementById('smoking').checked = state.smoking;
+                updateSmokingLabel();
+            }
+        }
+
+        // Save state on change
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('change', saveState);
+        });
+
+        // Load state on page load
+        window.onload = loadState;
+    </script>
 </body>
 </html>
