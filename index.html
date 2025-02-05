@@ -16,14 +16,19 @@
             <p>Age: <input type="text" id="age" value="65" /></p>
             <p>Sex: 
                 <label class="switch">
-                    <input type="checkbox" id="sex" checked>
+                    <input type="checkbox" id="sex" checked onchange="updateSexLabel()">
                     <span class="slider round"></span>
                 </label>
+                <span id="sex-label">Male</span>
             </p>
         </div>
         <div class="button">
             <button id="viewTableButton" onclick="location.href='table.html'">Activate DSI</button>
         </div>
+    </div>
+    <div class="activated-analyzers">
+        <h3>Activated Risk Analyzers</h3>
+        <div id="analyzers-container"></div>
     </div>
     <div class="patient-values-container">
         <div class="patient-values">
@@ -47,8 +52,9 @@
         </div>
         <div class="patient-values">
             <h3>BMI</h3>
-            <p>Height: <input type="text" id="height" value="65 inches" /></p>
-            <p>Weight: <input type="text" id="weight" value="150 lbs" /></p>
+            <p>Height: <input type="text" id="height" value="65 inches" oninput="calculateBMI()" /></p>
+            <p>Weight: <input type="text" id="weight" value="150 lbs" oninput="calculateBMI()" /></p>
+            <p>BMI: <span id="bmi">24.96</span></p>
         </div>
     </div>
     <script src="index.js"></script>

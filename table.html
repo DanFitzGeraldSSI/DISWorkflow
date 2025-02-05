@@ -57,8 +57,8 @@
             <tbody>
                 <!-- ...existing code... -->
                 <tr>
-                    <td><input type="checkbox" name="activation" /></td>
-                    <td>Inactive</td>
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Stroke', 'Low (0-9)')" /></td>
+                    <td class="risk-status">Inactive</td>
                     <td>Stroke</td>
                     <td>Alerts providers with red indicator identifying a patient at high risk</td>
                     <td>Low (0-9)</td>
@@ -76,8 +76,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox" name="activation" /></td>
-                    <td>Active</td>
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Diabetes', 'High (>20)')" /></td>
+                    <td class="risk-status">Inactive</td>
                     <td>Diabetes</td>
                     <td>Description 5</td>
                     <td>High (>20)</td>
@@ -92,6 +92,44 @@
                     <td>
                         <button onclick="showAuditLog('Diabetes')">View Audit Log</button>
                         <button onclick="navigateToMonitoring('Diabetes')">Monitoring & Maintenance</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Hypertension', 'Medium (10-19)')" /></td>
+                    <td class="risk-status">Inactive</td>
+                    <td>Hypertension</td>
+                    <td>Description 3</td>
+                    <td>Medium (10-19)</td>
+                    <td>50-70</td>
+                    <td>Female</td>
+                    <td>
+                        Attribute 5, Attribute 6
+                        <button onclick="manageAttributes('Hypertension')">Manage</button>
+                    </td>
+                    <td><!-- Last Updated Date --></td>
+                    <td><button onclick="navigateToDSIFeedback('Hypertension')">DSI Feedback</button></td>
+                    <td>
+                        <button onclick="showAuditLog('Hypertension')">View Audit Log</button>
+                        <button onclick="navigateToMonitoring('Hypertension')">Monitoring & Maintenance</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Obesity', 'Low (0-9)')" /></td>
+                    <td class="risk-status">Inactive</td>
+                    <td>Obesity</td>
+                    <td>Description 4</td>
+                    <td>Low (0-9)</td>
+                    <td>30-50</td>
+                    <td>Male</td>
+                    <td>
+                        Attribute 7, Attribute 8
+                        <button onclick="manageAttributes('Obesity')">Manage</button>
+                    </td>
+                    <td><!-- Last Updated Date --></td>
+                    <td><button onclick="navigateToDSIFeedback('Obesity')">DSI Feedback</button></td>
+                    <td>
+                        <button onclick="showAuditLog('Obesity')">View Audit Log</button>
+                        <button onclick="navigateToMonitoring('Obesity')">Monitoring & Maintenance</button>
                     </td>
                 </tr>
             </tbody>
@@ -112,5 +150,10 @@
         <button onclick="returnToPatientRecord()">Return to Patient Record</button>
     </div>
     <script src="script.js"></script>
+    <script>
+        function returnToPatientRecord() {
+            window.location.href = 'index.html';
+        }
+    </script>
 </body>
 </html>

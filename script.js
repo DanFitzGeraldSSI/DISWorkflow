@@ -16,11 +16,19 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.querySelectorAll('tbody input[name="activation"]').forEach((checkbox, index) => {
-        checkbox.checked = false; // Ensure the activate fields are by default unselected
+        const riskAnalyzerName = checkbox.closest('tr').querySelector('td:nth-child(3)').textContent;
+        const isActive = localStorage.getItem(`activation-${riskAnalyzerName}`) === 'true';
+        checkbox.checked = isActive;
+        if (isActive) {
+            toggleActivation(checkbox, riskAnalyzerName, checkbox.closest('tr').querySelector('td:nth-child(5)').textContent);
+        }
+
         checkbox.addEventListener('change', function() {
             const timestamp = new Date().toLocaleString();
             const riskAnalyzerName = checkbox.closest('tr').querySelector('td:nth-child(3)').textContent;
             auditLog.push({ riskAnalyzerName, timestamp, status: checkbox.checked ? 'Activated' : 'Deactivated' });
+            localStorage.setItem(`activation-${riskAnalyzerName}`, checkbox.checked);
+            toggleActivation(checkbox, riskAnalyzerName, checkbox.closest('tr').querySelector('td:nth-child(5)').textContent);
             updateActiveDSICount();
         });
     });
@@ -71,10 +79,30 @@ document.addEventListener('DOMContentLoaded', function() {
         window.location.href = `monitoring.html?analyzer=${encodeURIComponent(riskAnalyzerName)}`;
     }
 
+    function toggleActivation(checkbox, analyzerName, riskScore) {
+        const riskStatusCell = checkbox.closest('tr').querySelector('.risk-status');
+        const analyzersContainer = JSON.parse(window.localStorage.getItem('analyzers-container')) || [];
+
+        if (checkbox.checked) {
+            riskStatusCell.textContent = 'Active';
+            const analyzerDiv = { name: analyzerName, score: riskScore };
+            analyzersContainer.push(analyzerDiv);
+        } else {
+            riskStatusCell.textContent = 'Inactive';
+            const index = analyzersContainer.findIndex(analyzer => analyzer.name === analyzerName);
+            if (index !== -1) {
+                analyzersContainer.splice(index, 1);
+            }
+        }
+        window.localStorage.setItem('analyzers-container', JSON.stringify(analyzersContainer));
+        displayActivatedAnalyzers();
+    }
+
     window.showAuditLog = showAuditLog;
     window.exportActiveDSIs = exportActiveDSIs;
     window.manageAttributes = manageAttributes;
     window.returnToPatientRecord = returnToPatientRecord;
     window.navigateToDSIFeedback = navigateToDSIFeedback;
     window.navigateToMonitoring = navigateToMonitoring;
+    window.toggleActivation = toggleActivation;
 });
