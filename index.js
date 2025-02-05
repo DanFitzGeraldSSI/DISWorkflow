@@ -25,6 +25,48 @@ function updateSexLabel() {
     sexLabel.textContent = sexCheckbox.checked ? 'Male' : 'Female';
 }
 
+function updateDiabetesLabel() {
+    const checkbox = document.getElementById('diabetes');
+    const label = document.getElementById('diabetes-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
+function updateHypertensionMedicationsLabel() {
+    const checkbox = document.getElementById('hypertension-medications');
+    const label = document.getElementById('hypertension-medications-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
+function updateSignificantMurmurLabel() {
+    const checkbox = document.getElementById('significant-murmur');
+    const label = document.getElementById('significant-murmur-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
+function updateHeartFailureLabel() {
+    const checkbox = document.getElementById('heart-failure');
+    const label = document.getElementById('heart-failure-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
+function updateCardiovascularDiseaseLabel() {
+    const checkbox = document.getElementById('cardiovascular-disease');
+    const label = document.getElementById('cardiovascular-disease-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
+function updateAtrialFibrillationLabel() {
+    const checkbox = document.getElementById('atrial-fibrillation');
+    const label = document.getElementById('atrial-fibrillation-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
+function updateVentricularHypertrophyLabel() {
+    const checkbox = document.getElementById('ventricular-hypertrophy');
+    const label = document.getElementById('ventricular-hypertrophy-label');
+    label.textContent = checkbox.checked ? 'Yes' : 'No';
+}
+
 function displayActivatedAnalyzers() {
     const analyzersContainer = document.getElementById('analyzers-container');
     analyzersContainer.innerHTML = ''; // Clear existing content
@@ -40,5 +82,20 @@ function displayActivatedAnalyzers() {
 // Initialize the sex label and display activated analyzers on page load
 document.addEventListener('DOMContentLoaded', function() {
     updateSexLabel();
+    updateDiabetesLabel();
+    updateHypertensionMedicationsLabel();
+    updateSignificantMurmurLabel();
+    updateHeartFailureLabel();
+    updateCardiovascularDiseaseLabel();
+    updateAtrialFibrillationLabel();
+    updateVentricularHypertrophyLabel();
     displayActivatedAnalyzers();
+
+    document.getElementById('diabetes').addEventListener('change', updateDiabetesLabel);
+    document.getElementById('hypertension-medications').addEventListener('change', updateHypertensionMedicationsLabel);
+    document.getElementById('significant-murmur').addEventListener('change', updateSignificantMurmurLabel);
+    document.getElementById('heart-failure').addEventListener('change', updateHeartFailureLabel);
+    document.getElementById('cardiovascular-disease').addEventListener('change', updateCardiovascularDiseaseLabel);
+    document.getElementById('atrial-fibrillation').addEventListener('change', updateAtrialFibrillationLabel);
+    document.getElementById('ventricular-hypertrophy').addEventListener('change', updateVentricularHypertrophyLabel);
 });

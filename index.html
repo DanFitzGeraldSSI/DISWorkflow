@@ -37,6 +37,7 @@
             <p>SBP: <input type="text" id="sbp" value="120 mmHg" /></p>
             <p>BP: <input type="text" id="bp" value="120/80 mmHg" /></p>
             <p>Pulse: <input type="text" id="pulse" value="70 bpm" /></p>
+            <p>PR Interval: <input type="text" id="pr-interval" value="200" /></p>
         </div>
         <div class="patient-values">
             <h3>Problem List</h3>
@@ -48,7 +49,57 @@
         </div>
         <div class="patient-values">
             <h3>Medical History</h3>
-            <p>Diagnosis: <input type="text" id="medical-diagnosis" value="Diabetes" /></p>
+            <h4>Cardiac Diseases</h4>
+            <p>Atrial Fibrillation: 
+                <label class="switch">
+                    <input type="checkbox" id="atrial-fibrillation" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="atrial-fibrillation-label">No</span>
+            </p>
+            <p>Left Ventricular Hypertrophy: 
+                <label class="switch">
+                    <input type="checkbox" id="ventricular-hypertrophy" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="ventricular-hypertrophy-label">No</span>
+            </p>
+            <p>Prevalent Heart Failure: 
+                <label class="switch">
+                    <input type="checkbox" id="heart-failure" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="heart-failure-label">No</span>
+            </p>
+            <p>Prior Cardiovascular Disease: 
+                <label class="switch">
+                    <input type="checkbox" id="cardiovascular-disease" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="cardiovascular-disease-label">No</span>
+            </p>
+            <p>Significant Murmur: 
+                <label class="switch">
+                    <input type="checkbox" id="significant-murmur" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="significant-murmur-label">No</span>
+            </p>
+            <h4>Other Conditions</h4>
+            <p>Diabetes: 
+                <label class="switch">
+                    <input type="checkbox" id="diabetes" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="diabetes-label">No</span>
+            </p>
+            <p>Use of Hypertension Medications: 
+                <label class="switch">
+                    <input type="checkbox" id="hypertension-medications" />
+                    <span class="slider round"></span>
+                </label>
+                <span id="hypertension-medications-label">No</span>
+            </p>
         </div>
         <div class="patient-values">
             <h3>BMI</h3>
