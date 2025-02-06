@@ -15,7 +15,6 @@
         <table>
             <thead>
                 <tr>
-                    <th>Activate</th>
                     <th>Risk Analyzer Name</th>
                     <th>Intervention Description</th>
                     <th>Risk Category</th>
@@ -30,7 +29,6 @@
             <tbody>
                 <!-- Display rows regardless of activation status -->
                 <tr class="risk-analyzer-row" data-active="false">
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Probability of Stroke Within 10 Years')" /></td>
                     <td>Probability of Stroke Within 10 Years</td>
                     <td>Alerts provider when the patient is at high risk for Stroke</td>
                     <td>
@@ -51,7 +49,6 @@
                     </td>
                 </tr>
                 <tr class="risk-analyzer-row" data-active="false">
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Diabetes')" /></td>
                     <td>Diabetes</td>
                     <td>Description 5</td>
                     <td>
@@ -72,7 +69,6 @@
                     </td>
                 </tr>
                 <tr class="risk-analyzer-row" data-active="false">
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Hypertension')" /></td>
                     <td>Hypertension</td>
                     <td>Description 3</td>
                     <td>
@@ -93,7 +89,6 @@
                     </td>
                 </tr>
                 <tr class="risk-analyzer-row" data-active="false">
-                    <td><input type="checkbox" name="activation" onchange="toggleActivation(this, 'Obesity')" /></td>
                     <td>Obesity</td>
                     <td>Description 4</td>
                     <td>
@@ -116,7 +111,7 @@
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="10">
+                    <td colspan="9">
                         <div id="activation-summary" style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <h3>Activation Summary</h3>
