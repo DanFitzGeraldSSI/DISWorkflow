@@ -16,102 +16,25 @@
             <thead>
                 <tr>
                     <th>Risk Analyzer Name</th>
-                    <th>Intervention Description</th>
-                    <th>Risk Category</th>
                     <th>Age Range</th>
                     <th>Sex</th>
+                    <th>Exclude Criteria</th>
+                    <th>Intervention Description</th>
+                    <th>Risk Category</th>
                     <th>Attributes to Calculate</th>
-                    <th>Last Updated</th>
                     <th>DSI Feedback</th>
-                    <th>Audit & Maintenance</th>
+                    <th>Audit</th>
+                    <th>Risk Management</th>
+                    <th>Edit</th>
+                    <th>Last Updated</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- Display rows regardless of activation status -->
-                <tr class="risk-analyzer-row" data-active="false">
-                    <td>Probability of Stroke Within 10 Years</td>
-                    <td>Alerts provider when the patient is at high risk for Stroke</td>
-                    <td>
-                        Low (0-9)<br> Med (10-19)<br> High (>20)
-                        <button onclick="navigateToRiskManagement('Stroke')">Risk Management</button>
-                    </td>
-                    <td>54-72</td>
-                    <td>Male<br> Female</td>
-                    <td>
-                        Age 55-84, Sex Any, Smoking, CVD, DM, LVH
-                        <button onclick="manageAttributes('Stroke')">Manage</button>
-                    </td>
-                    <td><!-- Last Updated Date --></td>
-                    <td><button onclick="navigateToDSIFeedback('Stroke')">DSI Feedback</button></td>
-                    <td>
-                        <button onclick="showAuditLog('Stroke')">View Audit Log</button>
-                        <button onclick="navigateToMonitoring('Stroke')">Monitoring & Maintenance</button>
-                    </td>
-                </tr>
-                <tr class="risk-analyzer-row" data-active="false">
-                    <td>Diabetes</td>
-                    <td>Description 5</td>
-                    <td>
-                        High (>20)
-                        <button onclick="navigateToRiskManagement('Diabetes')">Risk Management</button>
-                    </td>
-                    <td>60-80</td>
-                    <td>Male</td>
-                    <td>
-                        Attribute 9, Attribute 10
-                        <button onclick="manageAttributes('Diabetes')">Manage</button>
-                    </td>
-                    <td><!-- Last Updated Date --></td>
-                    <td><button onclick="navigateToDSIFeedback('Diabetes')">DSI Feedback</button></td>
-                    <td>
-                        <button onclick="showAuditLog('Diabetes')">View Audit Log</button>
-                        <button onclick="navigateToMonitoring('Diabetes')">Monitoring & Maintenance</button>
-                    </td>
-                </tr>
-                <tr class="risk-analyzer-row" data-active="false">
-                    <td>Hypertension</td>
-                    <td>Description 3</td>
-                    <td>
-                        Medium (10-19)
-                        <button onclick="navigateToRiskManagement('Hypertension')">Risk Management</button>
-                    </td>
-                    <td>50-70</td>
-                    <td>Female</td>
-                    <td>
-                        Attribute 5, Attribute 6
-                        <button onclick="manageAttributes('Hypertension')">Manage</button>
-                    </td>
-                    <td><!-- Last Updated Date --></td>
-                    <td><button onclick="navigateToDSIFeedback('Hypertension')">DSI Feedback</button></td>
-                    <td>
-                        <button onclick="showAuditLog('Hypertension')">View Audit Log</button>
-                        <button onclick="navigateToMonitoring('Hypertension')">Monitoring & Maintenance</button>
-                    </td>
-                </tr>
-                <tr class="risk-analyzer-row" data-active="false">
-                    <td>Obesity</td>
-                    <td>Description 4</td>
-                    <td>
-                        Low (0-9)
-                        <button onclick="navigateToRiskManagement('Obesity')">Risk Management</button>
-                    </td>
-                    <td>30-50</td>
-                    <td>Male</td>
-                    <td>
-                        Attribute 7, Attribute 8
-                        <button onclick="manageAttributes('Obesity')">Manage</button>
-                    </td>
-                    <td><!-- Last Updated Date --></td>
-                    <td><button onclick="navigateToDSIFeedback('Obesity')">DSI Feedback</button></td>
-                    <td>
-                        <button onclick="showAuditLog('Obesity')">View Audit Log</button>
-                        <button onclick="navigateToMonitoring('Obesity')">Monitoring & Maintenance</button>
-                    </td>
-                </tr>
+            <tbody id="risk-analyzer-rows">
+                <!-- Rows will be dynamically generated here -->
             </tbody>
             <tfoot>
                 <tr>
-                    <td colspan="9">
+                    <td colspan="12">
                         <div id="activation-summary" style="display: flex; justify-content: space-between; align-items: center;">
                             <div>
                                 <h3>Activation Summary</h3>
@@ -125,47 +48,183 @@
         </table>
         <button onclick="returnToPatientRecord()">Return to Patient Record</button>
         <button onclick="resetToDefaults()">Reset to Defaults</button>
+        <button onclick="addRiskAnalyzer()">Add Risk Analyzer</button>
     </div>
     <script src="script.js"></script>
     <script>
+        const riskAnalyzers = [
+            {
+                name: 'Probability of Stroke Within 10 Years',
+                description: 'Alerts provider when the patient is at high risk for Stroke',
+                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (>20)',
+                ageRangeLow: '54',
+                ageRangeHigh: '72',
+                sex: 'Male<br> Female',
+                excludeCriteria: 'ICD-10: I63',
+                attributes: 'Age 55-84, Sex Any, Smoking, CVD, DM, LVH',
+                lastUpdated: '',
+                dsiFeedback: 'Stroke',
+                auditLog: 'Stroke',
+                monitoring: 'Stroke',
+                riskManagement: 'Stroke'
+            },
+            {
+                name: 'Diabetes',
+                description: 'Description 5',
+                riskCategory: 'High (>20)',
+                ageRangeLow: '60',
+                ageRangeHigh: '80',
+                sex: 'Male',
+                excludeCriteria: 'ICD-10: E11',
+                attributes: 'Attribute 9, Attribute 10',
+                lastUpdated: '',
+                dsiFeedback: 'Diabetes',
+                auditLog: 'Diabetes',
+                monitoring: 'Diabetes',
+                riskManagement: 'Diabetes'
+            },
+            {
+                name: 'Hypertension',
+                description: 'Description 3',
+                riskCategory: 'Medium (10-19)',
+                ageRangeLow: '50',
+                ageRangeHigh: '70',
+                sex: 'Female',
+                excludeCriteria: 'ICD-10: I10',
+                attributes: 'Attribute 5, Attribute 6',
+                lastUpdated: '',
+                dsiFeedback: 'Hypertension',
+                auditLog: 'Hypertension',
+                monitoring: 'Hypertension',
+                riskManagement: 'Hypertension'
+            },
+            {
+                name: 'Obesity',
+                description: 'Description 4',
+                riskCategory: 'Low (0-9)',
+                ageRangeLow: '30',
+                ageRangeHigh: '50',
+                sex: 'Male',
+                excludeCriteria: 'ICD-10: E66',
+                attributes: 'Attribute 7, Attribute 8',
+                lastUpdated: '',
+                dsiFeedback: 'Obesity',
+                auditLog: 'Obesity',
+                monitoring: 'Obesity',
+                riskManagement: 'Obesity'
+            }
+        ];
+
+        function renderRiskAnalyzers() {
+            const tbody = document.getElementById('risk-analyzer-rows');
+            tbody.innerHTML = '';
+            riskAnalyzers.forEach((analyzer, index) => {
+                const row = document.createElement('tr');
+                row.className = 'risk-analyzer-row';
+                row.dataset.active = 'false';
+                row.innerHTML = `
+                    <td>${analyzer.name}</td>
+                    <td>${analyzer.ageRangeLow} - ${analyzer.ageRangeHigh}</td>
+                    <td>${analyzer.sex}</td>
+                    <td>${analyzer.excludeCriteria}</td>
+                    <td>${analyzer.description}</td>
+                    <td>${analyzer.riskCategory} <button onclick="navigateToMonitoring('${analyzer.monitoring}')">Risk Threshold Maintenance</button></td>
+                    <td>${analyzer.attributes} <button onclick="manageAttributes('${analyzer.name}')">Manage</button></td>
+                    <td><button onclick="navigateToDSIFeedback('${analyzer.dsiFeedback}')">DSI Feedback</button></td>
+                    <td><button onclick="showAuditLog('${analyzer.auditLog}')">View Audit Log</button></td>
+                    <td><button onclick="navigateToRiskManagement('${analyzer.riskManagement}')">Risk Management</button></td>
+                    <td><button onclick="editRiskAnalyzer(${index})">Edit</button></td>
+                    <td>${analyzer.lastUpdated}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function addRiskAnalyzer() {
+            const newAnalyzer = {
+                name: 'New Risk Analyzer',
+                description: 'New Description',
+                riskCategory: 'New Risk Category',
+                ageRangeLow: 'New Low Age',
+                ageRangeHigh: 'New High Age',
+                sex: 'New Sex',
+                excludeCriteria: 'New Exclude Criteria',
+                attributes: 'New Attributes',
+                lastUpdated: '',
+                dsiFeedback: 'New Feedback',
+                auditLog: 'New Audit Log',
+                monitoring: 'New Monitoring',
+                riskManagement: 'New Risk Management'
+            };
+            riskAnalyzers.push(newAnalyzer);
+            renderRiskAnalyzers();
+        }
+
+        function editRiskAnalyzer(index) {
+            const analyzer = riskAnalyzers[index];
+            const editForm = `
+                <form id="edit-form">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" value="${analyzer.name}" /><br>
+                    <label for="description">Description:</label>
+                    <input type="text" id="description" value="${analyzer.description}" /><br>
+                    <label for="ageRangeLow">Age Range Low:</label>
+                    <input type="text" id="ageRangeLow" value="${analyzer.ageRangeLow}" /><br>
+                    <label for="ageRangeHigh">Age Range High:</label>
+                    <input type="text" id="ageRangeHigh" value="${analyzer.ageRangeHigh}" /><br>
+                    <label for="sex">Sex:</label>
+                    <select id="sex">
+                        <option value="Male" ${analyzer.sex.includes('Male') ? 'selected' : ''}>Male</option>
+                        <option value="Female" ${analyzer.sex.includes('Female') ? 'selected' : ''}>Female</option>
+                        <option value="Both" ${analyzer.sex.includes('Both') ? 'selected' : ''}>Both</option>
+                    </select><br>
+                    <label for="excludeCriteria">Exclude Criteria:</label>
+                    <input type="text" id="excludeCriteria" value="${analyzer.excludeCriteria}" /><br>
+                    <button type="button" onclick="saveEdits(${index})">Save</button>
+                    <button type="button" onclick="closeEditForm()">Cancel</button>
+                </form>
+            `;
+            const editWindow = window.open('', 'Edit Risk Analyzer', 'width=400,height=400');
+            editWindow.document.body.innerHTML = editForm;
+        }
+
+        function saveEdits(index) {
+            const editWindow = window.open('', 'Edit Risk Analyzer');
+            const newName = editWindow.document.getElementById('name').value;
+            const newDescription = editWindow.document.getElementById('description').value;
+            const newAgeRangeLow = editWindow.document.getElementById('ageRangeLow').value;
+            const newAgeRangeHigh = editWindow.document.getElementById('ageRangeHigh').value;
+            const newSex = editWindow.document.getElementById('sex').value;
+            const newExcludeCriteria = editWindow.document.getElementById('excludeCriteria').value;
+
+            riskAnalyzers[index] = {
+                ...riskAnalyzers[index],
+                name: newName,
+                description: newDescription,
+                ageRangeLow: newAgeRangeLow,
+                ageRangeHigh: newAgeRangeHigh,
+                sex: newSex,
+                excludeCriteria: newExcludeCriteria,
+                lastUpdated: new Date().toLocaleString()
+            };
+            localStorage.setItem('riskAnalyzers', JSON.stringify(riskAnalyzers));
+            renderRiskAnalyzers();
+            editWindow.close();
+        }
+
+        function closeEditForm() {
+            const editWindow = window.open('', 'Edit Risk Analyzer');
+            editWindow.close();
+        }
+
         function returnToPatientRecord() {
             window.location.href = 'index.html';
         }
 
-        // Function to toggle the activation status and update localStorage
-        function toggleActivation(checkbox, analyzerName) {
-            const row = checkbox.closest('.risk-analyzer-row');
-            row.dataset.active = checkbox.checked;
-            updateActivatedAnalyzers(analyzerName, checkbox.checked);
-        }
-
-        // Function to update the activated analyzers in localStorage
-        function updateActivatedAnalyzers(analyzerName, isActive) {
-            let activatedAnalyzers = JSON.parse(localStorage.getItem('activatedAnalyzers')) || [];
-            if (isActive) {
-                if (!activatedAnalyzers.includes(analyzerName)) {
-                    activatedAnalyzers.push(analyzerName);
-                }
-            } else {
-                activatedAnalyzers = activatedAnalyzers.filter(analyzer => analyzer !== analyzerName);
-            }
-            localStorage.setItem('activatedAnalyzers', JSON.stringify(activatedAnalyzers));
-        }
-
-        // Function to reset all checkboxes to default (unchecked)
         function resetToDefaults() {
-            document.querySelectorAll('.risk-analyzer-row input[type="checkbox"]').forEach(checkbox => {
-                checkbox.checked = false;
-                toggleActivation(checkbox, checkbox.closest('.risk-analyzer-row').querySelector('td:nth-child(2)').textContent);
-            });
+            // Reset logic here
         }
 
-        // Initial call to set the visibility based on the current state
-        document.querySelectorAll('.risk-analyzer-row').forEach(row => {
-            row.style.display = '';
-        });
-
-        // Functions for button actions
         function manageAttributes(analyzerName) {
             window.location.href = 'attributes_management.html';
         }
@@ -175,7 +234,6 @@
         }
 
         function showAuditLog(analyzerName) {
-            // Open audit log in a pop-out window
             window.open('audit_log.html', 'Audit Log', 'width=800,height=600');
         }
 
@@ -186,6 +244,15 @@
         function navigateToRiskManagement(analyzerName) {
             window.location.href = 'risk_management_summary.html';
         }
+
+        window.onload = () => {
+            const savedAnalyzers = JSON.parse(localStorage.getItem('riskAnalyzers'));
+            if (savedAnalyzers) {
+                riskAnalyzers.length = 0;
+                riskAnalyzers.push(...savedAnalyzers);
+            }
+            renderRiskAnalyzers();
+        };
     </script>
 </body>
 </html>
