@@ -128,8 +128,8 @@
                     <td>${analyzer.sex}</td>
                     <td>${analyzer.excludeCriteria}</td>
                     <td>${analyzer.description}</td>
-                    <td>${analyzer.riskCategory} <button onclick="navigateToMonitoring('${analyzer.monitoring}')">Risk Threshold Maintenance</button></td>
-                    <td>${analyzer.attributes} <button onclick="manageAttributes('${analyzer.name}')">Manage</button></td>
+                    <td>${analyzer.riskCategory}</td>
+                    <td>${analyzer.attributes}</td>
                     <td><button onclick="navigateToDSIFeedback('${analyzer.dsiFeedback}')">DSI Feedback</button></td>
                     <td><button onclick="showAuditLog('${analyzer.auditLog}')">View Audit Log</button></td>
                     <td><button onclick="navigateToRiskManagement('${analyzer.riskManagement}')">Risk Management</button></td>
@@ -180,12 +180,20 @@
                     </select><br>
                     <label for="excludeCriteria">Exclude Criteria:</label>
                     <input type="text" id="excludeCriteria" value="${analyzer.excludeCriteria}" /><br>
+                    <label>Risk Threshold:</label>
+                    <button type="button" onclick="navigateToMonitoring('${analyzer.monitoring}')">View/Edit</button><br>
+                    <label>Source Attributes:</label>
+                    <button type="button" onclick="manageAttributes('${analyzer.name}')">View/Edit</button><br>
                     <button type="button" onclick="saveEdits(${index})">Save</button>
                     <button type="button" onclick="closeEditForm()">Cancel</button>
                 </form>
             `;
             const editWindow = window.open('', 'Edit Risk Analyzer', 'width=400,height=400');
             editWindow.document.body.innerHTML = editForm;
+            editWindow.saveEdits = saveEdits;
+            editWindow.closeEditForm = closeEditForm;
+            editWindow.navigateToMonitoring = navigateToMonitoring;
+            editWindow.manageAttributes = manageAttributes;
         }
 
         function saveEdits(index) {
