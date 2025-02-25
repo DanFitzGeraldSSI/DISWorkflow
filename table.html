@@ -9,7 +9,7 @@
 <body>
     <div class="header">
         <h1>DSI Activation Dashboard</h1>
-            <h2>Select Risk Analysis</h2>
+        <h2>Select Risk Analysis</h2>
     </div>
     <div class="risk-table">
         <table>
@@ -50,13 +50,55 @@
         <button onclick="resetToDefaults()">Reset to Defaults</button>
         <button onclick="addRiskAnalyzer()">Add Risk Analyzer</button>
     </div>
+
+    <!-- Modal for editing risk analyzer -->
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeEditModal()">&times;</span>
+            <form id="edit-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" /><br>
+                <label for="description">Description:</label>
+                <input type="text" id="description" /><br>
+                <label for="ageRangeLow">Age Range Low:</label>
+                <input type="text" id="ageRangeLow" /><br>
+                <label for="ageRangeHigh">Age Range High:</label>
+                <input type="text" id="ageRangeHigh" /><br>
+                <label for="sex">Sex:</label>
+                <select id="sex">
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Both">Both</option>
+                </select><br>
+                <label for="excludeCriteria">Exclude Criteria:</label>
+                <input type="text" id="excludeCriteria" /><br>
+                <label>Risk Thresholds:</label>
+                <div id="risk-thresholds">
+                    <label for="low-risk">Low Risk:</label>
+                    <input type="text" id="low-risk" placeholder="0-9" value="0-9" /><br>
+                    <label for="medium-risk">Medium Risk:</label>
+                    <input type="text" id="medium-risk" placeholder="10-19" value="10-19" /><br>
+                    <label for="high-risk">High Risk:</label>
+                    <input type="text" id="high-risk" placeholder="20-100" value="20-100" /><br>
+                </div>
+                <label>Source Attributes:</label>
+                <div id="attributes-list">
+                    <!-- Attributes checkboxes will be dynamically generated here -->
+                </div>
+                <button type="button" onclick="saveEdits()">Save</button>
+                <button type="button" onclick="deleteRiskAnalyzer()">Delete</button>
+                <button type="button" onclick="closeEditModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+
     <script src="script.js"></script>
     <script>
         const riskAnalyzers = [
             {
                 name: 'Probability of Stroke Within 10 Years',
                 description: 'Alerts provider when the patient is at high risk for Stroke',
-                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (>20)',
+                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (20-100)',
                 ageRangeLow: '54',
                 ageRangeHigh: '72',
                 sex: 'Male<br> Female',
@@ -71,7 +113,7 @@
             {
                 name: 'Diabetes',
                 description: 'Description 5',
-                riskCategory: 'High (>20)',
+                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (20-100)',
                 ageRangeLow: '60',
                 ageRangeHigh: '80',
                 sex: 'Male',
@@ -86,7 +128,7 @@
             {
                 name: 'Hypertension',
                 description: 'Description 3',
-                riskCategory: 'Medium (10-19)',
+                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (20-100)',
                 ageRangeLow: '50',
                 ageRangeHigh: '70',
                 sex: 'Female',
@@ -101,7 +143,7 @@
             {
                 name: 'Obesity',
                 description: 'Description 4',
-                riskCategory: 'Low (0-9)',
+                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (20-100)',
                 ageRangeLow: '30',
                 ageRangeHigh: '50',
                 sex: 'Male',
@@ -113,6 +155,13 @@
                 monitoring: 'Obesity',
                 riskManagement: 'Obesity'
             }
+        ];
+
+        const availableAttributes = [
+            'Age', 'Sex', 'Temp', 'SBP', 'BP', 'Pulse', 'PR Interval', 'Height', 'Weight', 'BMI',
+            'Atrial Fibrillation', 'Left Ventricular Hypertrophy', 'Prevalent Heart Failure',
+            'Prior Cardiovascular Disease', 'Significant Murmur', 'Diabetes', 'Prior Stroke or Ischemic Attack',
+            'Hypertension Meds', 'Triglyceride level', 'Fasting glucose level', 'HDL-C level', 'Smoking'
         ];
 
         function renderRiskAnalyzers() {
@@ -144,7 +193,7 @@
             const newAnalyzer = {
                 name: 'New Risk Analyzer',
                 description: 'New Description',
-                riskCategory: 'New Risk Category',
+                riskCategory: 'Low (0-9)<br> Med (10-19)<br> High (20-100)',
                 ageRangeLow: 'New Low Age',
                 ageRangeHigh: 'New High Age',
                 sex: 'New Sex',
@@ -162,48 +211,50 @@
 
         function editRiskAnalyzer(index) {
             const analyzer = riskAnalyzers[index];
-            const editForm = `
-                <form id="edit-form">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" value="${analyzer.name}" /><br>
-                    <label for="description">Description:</label>
-                    <input type="text" id="description" value="${analyzer.description}" /><br>
-                    <label for="ageRangeLow">Age Range Low:</label>
-                    <input type="text" id="ageRangeLow" value="${analyzer.ageRangeLow}" /><br>
-                    <label for="ageRangeHigh">Age Range High:</label>
-                    <input type="text" id="ageRangeHigh" value="${analyzer.ageRangeHigh}" /><br>
-                    <label for="sex">Sex:</label>
-                    <select id="sex">
-                        <option value="Male" ${analyzer.sex.includes('Male') ? 'selected' : ''}>Male</option>
-                        <option value="Female" ${analyzer.sex.includes('Female') ? 'selected' : ''}>Female</option>
-                        <option value="Both" ${analyzer.sex.includes('Both') ? 'selected' : ''}>Both</option>
-                    </select><br>
-                    <label for="excludeCriteria">Exclude Criteria:</label>
-                    <input type="text" id="excludeCriteria" value="${analyzer.excludeCriteria}" /><br>
-                    <label>Risk Threshold:</label>
-                    <button type="button" onclick="navigateToMonitoring('${analyzer.monitoring}')">View/Edit</button><br>
-                    <label>Source Attributes:</label>
-                    <button type="button" onclick="manageAttributes('${analyzer.name}')">View/Edit</button><br>
-                    <button type="button" onclick="saveEdits(${index})">Save</button>
-                    <button type="button" onclick="closeEditForm()">Cancel</button>
-                </form>
-            `;
-            const editWindow = window.open('', 'Edit Risk Analyzer', 'width=400,height=400');
-            editWindow.document.body.innerHTML = editForm;
-            editWindow.saveEdits = saveEdits;
-            editWindow.closeEditForm = closeEditForm;
-            editWindow.navigateToMonitoring = navigateToMonitoring;
-            editWindow.manageAttributes = manageAttributes;
+            document.getElementById('name').value = analyzer.name;
+            document.getElementById('description').value = analyzer.description;
+            document.getElementById('ageRangeLow').value = analyzer.ageRangeLow;
+            document.getElementById('ageRangeHigh').value = analyzer.ageRangeHigh;
+            document.getElementById('sex').value = analyzer.sex;
+            document.getElementById('excludeCriteria').value = analyzer.excludeCriteria;
+
+            const riskThresholds = analyzer.riskCategory.split('<br>').map(threshold => threshold.split(' ')[1]);
+            document.getElementById('low-risk').value = riskThresholds[0] || '0-9';
+            document.getElementById('medium-risk').value = riskThresholds[1] || '10-19';
+            document.getElementById('high-risk').value = riskThresholds[2] || '20-100';
+
+            const attributesList = document.getElementById('attributes-list');
+            attributesList.innerHTML = '';
+            availableAttributes.forEach(attribute => {
+                const checkbox = document.createElement('input');
+                checkbox.type = 'checkbox';
+                checkbox.value = attribute;
+                checkbox.checked = analyzer.attributes.includes(attribute);
+                attributesList.appendChild(checkbox);
+                attributesList.appendChild(document.createTextNode(attribute));
+                attributesList.appendChild(document.createElement('br'));
+            });
+
+            document.getElementById('edit-modal').style.display = 'block';
         }
 
-        function saveEdits(index) {
-            const editWindow = window.open('', 'Edit Risk Analyzer');
-            const newName = editWindow.document.getElementById('name').value;
-            const newDescription = editWindow.document.getElementById('description').value;
-            const newAgeRangeLow = editWindow.document.getElementById('ageRangeLow').value;
-            const newAgeRangeHigh = editWindow.document.getElementById('ageRangeHigh').value;
-            const newSex = editWindow.document.getElementById('sex').value;
-            const newExcludeCriteria = editWindow.document.getElementById('excludeCriteria').value;
+        function saveEdits() {
+            const index = riskAnalyzers.findIndex(analyzer => analyzer.name === document.getElementById('name').value);
+            const newName = document.getElementById('name').value;
+            const newDescription = document.getElementById('description').value;
+            const newAgeRangeLow = document.getElementById('ageRangeLow').value;
+            const newAgeRangeHigh = document.getElementById('ageRangeHigh').value;
+            const newSex = document.getElementById('sex').value;
+            const newExcludeCriteria = document.getElementById('excludeCriteria').value;
+
+            const lowRisk = document.getElementById('low-risk').value;
+            const mediumRisk = document.getElementById('medium-risk').value;
+            const highRisk = document.getElementById('high-risk').value;
+            const newRiskCategory = `Low (${lowRisk})<br> Med (${mediumRisk})<br> High (${highRisk})`;
+
+            const attributesList = document.getElementById('attributes-list');
+            const selectedAttributes = Array.from(attributesList.querySelectorAll('input[type="checkbox"]:checked'))
+                .map(checkbox => checkbox.value);
 
             riskAnalyzers[index] = {
                 ...riskAnalyzers[index],
@@ -213,16 +264,25 @@
                 ageRangeHigh: newAgeRangeHigh,
                 sex: newSex,
                 excludeCriteria: newExcludeCriteria,
+                riskCategory: newRiskCategory,
+                attributes: selectedAttributes.join(', '),
                 lastUpdated: new Date().toLocaleString()
             };
             localStorage.setItem('riskAnalyzers', JSON.stringify(riskAnalyzers));
             renderRiskAnalyzers();
-            editWindow.close();
+            closeEditModal();
         }
 
-        function closeEditForm() {
-            const editWindow = window.open('', 'Edit Risk Analyzer');
-            editWindow.close();
+        function deleteRiskAnalyzer() {
+            const index = riskAnalyzers.findIndex(analyzer => analyzer.name === document.getElementById('name').value);
+            riskAnalyzers.splice(index, 1);
+            localStorage.setItem('riskAnalyzers', JSON.stringify(riskAnalyzers));
+            renderRiskAnalyzers();
+            closeEditModal();
+        }
+
+        function closeEditModal() {
+            document.getElementById('edit-modal').style.display = 'none';
         }
 
         function returnToPatientRecord() {
@@ -230,11 +290,12 @@
         }
 
         function resetToDefaults() {
-            // Reset logic here
+            localStorage.removeItem('riskAnalyzers');
+            window.location.reload();
         }
 
-        function manageAttributes(analyzerName) {
-            window.location.href = 'attributes_management.html';
+        function navigateToMonitoring() {
+            window.location.href = 'monitoring.html';
         }
 
         function navigateToDSIFeedback(analyzerName) {
@@ -243,10 +304,6 @@
 
         function showAuditLog(analyzerName) {
             window.open('audit_log.html', 'Audit Log', 'width=800,height=600');
-        }
-
-        function navigateToMonitoring(analyzerName) {
-            window.location.href = 'monitoring.html';
         }
 
         function navigateToRiskManagement(analyzerName) {

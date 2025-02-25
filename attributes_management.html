@@ -271,6 +271,7 @@
             <button onclick="resetChanges()">Reset Changes</button>
             <button onclick="exportAttributes()">Export Attributes</button>
         </div>
+        <div id="save-message" style="display: none; color: green;">Your updates have been saved.</div>
     </div>
     <script src="attributes_management.js"></script>
     <script>
@@ -303,11 +304,15 @@
             const urlParams = new URLSearchParams(window.location.search);
             const index = urlParams.get('index');
             const riskAnalyzers = JSON.parse(localStorage.getItem('riskAnalyzers'));
+            const analyzerName = riskAnalyzers[index].name;
             riskAnalyzers[index].attributes = selectedAttributes.join(', ');
             localStorage.setItem('riskAnalyzers', JSON.stringify(riskAnalyzers));
-            localStorage.setItem('selectedAttributes', JSON.stringify(selectedAttributes));
+            localStorage.setItem(`selectedAttributes_${analyzerName}`, JSON.stringify(selectedAttributes));
             window.opener.renderRiskAnalyzers();
-            window.close();
+            document.getElementById('save-message').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('save-message').style.display = 'none';
+            }, 3000);
         }
 
         function loadAttributes() {
@@ -324,7 +329,7 @@
                 }
             });
 
-            const selectedAttributes = JSON.parse(localStorage.getItem('selectedAttributes')) || [];
+            const selectedAttributes = JSON.parse(localStorage.getItem(`selectedAttributes_${analyzer.name}`)) || [];
             rows.forEach(row => {
                 if (selectedAttributes.includes(row.cells[1].textContent)) {
                     row.querySelector('td input[type="checkbox"]').checked = true;

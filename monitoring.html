@@ -9,77 +9,102 @@
 <body>
     <div class="header">
         <h1>Risk Threshold Maintenance - Framingham Risk Model</h1>
-        <p>Manage the risk threshold maintenance of the selected risk model.</p>
+        <p>Manage the risk category values for the selected risk model.</p>
     </div>
-    <div class="monitoring-maintenance">
-        <p>Risk Threshold Review Status: <span class="badge">Review Pending</span></p>
-        <label for="review-cycle">Review Cycle Settings:</label>
-        <select id="review-cycle">
-            <option value="6 months">6 months</option>
-            <option value="1 year">1 year</option>
-        </select>
+    <div class="monitoring-management">
+        <button onclick="goBack()">Back</button>
         <table>
             <thead>
                 <tr>
                     <th>Risk Category</th>
-                    <th>Low Threshold</th>
-                    <th>High Threshold</th>
+                    <th>Value/Details</th>
+                    <th>Editable</th>
                     <th>Last Updated</th>
-                    <th>Review Due</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody id="monitoring-tbody">
                 <tr>
-                    <td>High Risk</td>
-                    <td><input type="text" id="high-risk-low" value="20%" /></td>
-                    <td><input type="text" id="high-risk-high" value="100%" /></td>
-                    <td>2024-11-15</td>
-                    <td>Review Due: 2025-05-15</td>
+                    <td>Low</td>
+                    <td><input type="text" value="0-9" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
-                    <td>Medium Risk</td>
-                    <td><input type="text" id="medium-risk-low" value="10%" /></td>
-                    <td><input type="text" id="medium-risk-high" value="19%" /></td>
-                    <td>2024-11-15</td>
-                    <td>Review Due: 2025-05-15</td>
+                    <td>Medium</td>
+                    <td><input type="text" value="10-19" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
-                    <td>Low Risk</td>
-                    <td><input type="text" id="low-risk-low" value="0%" /></td>
-                    <td><input type="text" id="low-risk-high" value="9%" /></td>
-                    <td>2024-11-15</td>
-                    <td>Review Due: 2025-05-15</td>
+                    <td>High</td>
+                    <td><input type="text" value=">20" /></td>
+                    <td><input type="checkbox" /></td>
+                    <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
             </tbody>
         </table>
-        <div class="charts">
-            <div id="performance-trends" class="chart">Performance Trends Chart</div>
-            <div id="outcome-monitoring-summary" class="chart">Outcome Monitoring Summary Chart</div>
-        </div>
-        <div class="alerts">
-            <p>Alerts for Maintenance Actions: <span class="badge">Risk threshold review overdue for Moderate Risk (last updated >1 year ago).</span></p>
-        </div>
         <div class="actions">
-            <button onclick="showMaintenanceHistory()">Maintenance History Log</button>
-            <button onclick="adjustRiskThresholds()">Adjust Risk Thresholds</button>
-            <button onclick="addMonitoringMetrics()">Add Monitoring Metrics</button>
-            <button onclick="exportMaintenanceReport()">Export Maintenance Report</button>
+            <button onclick="saveMonitoring()">Save Changes</button>
+            <button onclick="resetMonitoring()">Reset Changes</button>
         </div>
-        <div class="filters">
-            <label for="population-group-filters">Population Group Filters:</label>
-            <select id="population-group-filters">
-                <option value="">All</option>
-                <option value="Age >60">Age >60</option>
-                <option value="Gender: Female">Gender: Female</option>
-            </select>
-        </div>
-        <p>Next Scheduled Review: 2025-05-01</p>
-        <div class="actions">
-            <button onclick="saveUpdates()">Save Updates</button>
-            <button onclick="revertChanges()">Revert Changes</button>
-        </div>
-        <button onclick="returnToDSIActivationScreen()">Return to DSI Activation Screen</button>
+        <div id="save-message" style="display: none; color: green;">Your updates have been saved.</div>
     </div>
     <script src="monitoring.js"></script>
+    <script>
+        function saveMonitoring() {
+            const rows = document.querySelectorAll('#monitoring-tbody tr');
+            const riskCategories = Array.from(rows).map(row => ({
+                category: row.cells[0].textContent,
+                value: row.cells[1].querySelector('input').value,
+                editable: row.cells[2].querySelector('input').checked,
+                lastUpdated: new Date().toLocaleString()
+            }));
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+            const riskAnalyzers = JSON.parse(localStorage.getItem('riskAnalyzers'));
+            riskAnalyzers[index].riskCategories = riskCategories;
+            localStorage.setItem('riskAnalyzers', JSON.stringify(riskAnalyzers));
+            document.getElementById('save-message').style.display = 'block';
+            setTimeout(() => {
+                document.getElementById('save-message').style.display = 'none';
+            }, 3000);
+        }
+
+        function loadMonitoring() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+            const riskAnalyzers = JSON.parse(localStorage.getItem('riskAnalyzers'));
+            const analyzer = riskAnalyzers[index];
+            document.getElementById('analyzer-name').textContent = analyzer.name;
+            const riskCategories = analyzer.riskCategories || [
+                { category: 'Low', value: '0-9', editable: false, lastUpdated: '' },
+                { category: 'Medium', value: '10-19', editable: false, lastUpdated: '' },
+                { category: 'High', value: '>20', editable: false, lastUpdated: '' }
+            ];
+            const tbody = document.getElementById('monitoring-tbody');
+            tbody.innerHTML = '';
+            riskCategories.forEach(category => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${category.category}</td>
+                    <td><input type="text" value="${category.value}" /></td>
+                    <td><input type="checkbox" ${category.editable ? 'checked' : ''} /></td>
+                    <td>${category.lastUpdated}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function resetMonitoring() {
+            loadMonitoring();
+        }
+
+        function goBack() {
+            window.location.href = 'table.html';
+        }
+
+        window.onload = loadMonitoring;
+    </script>
 </body>
 </html>
