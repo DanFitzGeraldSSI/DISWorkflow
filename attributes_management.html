@@ -8,7 +8,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>Source Attributes Management - Framingham Risk Model</h1>
+        <h1>Source Attributes Management - <span id="analyzer-name"></span></h1>
         <p>Manage the source attributes for the selected risk model.</p>
     </div>
     <div class="attributes-management">
@@ -27,6 +27,7 @@
         <table>
             <thead>
                 <tr>
+                    <th>Select</th>
                     <th>Attribute Name</th>
                     <th>Category</th>
                     <th>Value/Details</th>
@@ -36,6 +37,7 @@
             </thead>
             <tbody id="attributes-tbody">
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Age</td>
                     <td>Demographics</td>
                     <td><input type="text" value="65" /></td>
@@ -43,6 +45,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Sex</td>
                     <td>Demographics</td>
                     <td>
@@ -55,6 +58,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Temp</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="98.6°F" /></td>
@@ -62,6 +66,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>SBP</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="120 mmHg" /></td>
@@ -69,6 +74,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>BP</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="120/80 mmHg" /></td>
@@ -76,6 +82,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Pulse</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="70 bpm" /></td>
@@ -83,6 +90,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>PR Interval</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="200" /></td>
@@ -90,6 +98,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Height</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="65 inches" /></td>
@@ -97,6 +106,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Weight</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="150 lbs" /></td>
@@ -104,6 +114,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>BMI</td>
                     <td>Vital Signs</td>
                     <td><input type="text" value="24.96" /></td>
@@ -111,6 +122,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Atrial Fibrillation</td>
                     <td>Cardiac Diseases</td>
                     <td>
@@ -123,6 +135,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Left Ventricular Hypertrophy</td>
                     <td>Cardiac Diseases</td>
                     <td>
@@ -135,6 +148,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Prevalent Heart Failure</td>
                     <td>Cardiac Diseases</td>
                     <td>
@@ -147,6 +161,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Prior Cardiovascular Disease</td>
                     <td>Cardiac Diseases</td>
                     <td>
@@ -159,6 +174,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Significant Murmur</td>
                     <td>Cardiac Diseases</td>
                     <td>
@@ -171,6 +187,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Diabetes</td>
                     <td>Other Conditions</td>
                     <td>
@@ -183,6 +200,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Prior Stroke or Ischemic Attack</td>
                     <td>Other Conditions</td>
                     <td>
@@ -195,6 +213,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Hypertension Meds</td>
                     <td>Medication Use</td>
                     <td>
@@ -207,6 +226,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Triglyceride level</td>
                     <td>Diagnostic Results</td>
                     <td><input type="text" placeholder="____ mg/dL" /></td>
@@ -214,6 +234,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Fasting glucose level</td>
                     <td>Diagnostic Results</td>
                     <td><input type="text" placeholder="____ mg/dL" /></td>
@@ -221,6 +242,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>HDL-C level</td>
                     <td>Diagnostic Results</td>
                     <td><input type="text" placeholder="____ mg/dL" /></td>
@@ -228,6 +250,7 @@
                     <td>Last Updated: 2024-11-25, 2:30 PM</td>
                 </tr>
                 <tr>
+                    <td><input type="checkbox" /></td>
                     <td>Smoking</td>
                     <td>Social History</td>
                     <td>
@@ -244,7 +267,7 @@
         <div class="actions">
             <button onclick="showAuditLog()">View Audit Log</button>
             <button onclick="addNewAttribute()">Add New Attribute</button>
-            <button onclick="saveChanges()">Save Changes</button>
+            <button onclick="saveAttributes()">Save Changes</button>
             <button onclick="resetChanges()">Reset Changes</button>
             <button onclick="exportAttributes()">Export Attributes</button>
         </div>
@@ -257,8 +280,8 @@
             const rows = document.querySelectorAll('#attributes-tbody tr');
 
             rows.forEach(row => {
-                const attributeName = row.cells[0].textContent.toLowerCase();
-                const category = row.cells[1].textContent;
+                const attributeName = row.cells[1].textContent.toLowerCase();
+                const category = row.cells[2].textContent;
 
                 const matchesSearch = attributeName.includes(searchValue);
                 const matchesCategory = !categoryValue || category === categoryValue;
@@ -270,6 +293,51 @@
                 }
             });
         }
+
+        function saveAttributes() {
+            const rows = document.querySelectorAll('#attributes-tbody tr');
+            const selectedAttributes = Array.from(rows)
+                .filter(row => row.querySelector('td input[type="checkbox"]').checked)
+                .map(row => row.cells[1].textContent);
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+            const riskAnalyzers = JSON.parse(localStorage.getItem('riskAnalyzers'));
+            riskAnalyzers[index].attributes = selectedAttributes.join(', ');
+            localStorage.setItem('riskAnalyzers', JSON.stringify(riskAnalyzers));
+            localStorage.setItem('selectedAttributes', JSON.stringify(selectedAttributes));
+            window.opener.renderRiskAnalyzers();
+            window.close();
+        }
+
+        function loadAttributes() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const index = urlParams.get('index');
+            const riskAnalyzers = JSON.parse(localStorage.getItem('riskAnalyzers'));
+            const analyzer = riskAnalyzers[index];
+            document.getElementById('analyzer-name').textContent = analyzer.name;
+            const attributesArray = analyzer.attributes.split(', ');
+            const rows = document.querySelectorAll('#attributes-tbody tr');
+            rows.forEach(row => {
+                if (attributesArray.includes(row.cells[1].textContent)) {
+                    row.querySelector('td input[type="checkbox"]').checked = true;
+                }
+            });
+
+            const selectedAttributes = JSON.parse(localStorage.getItem('selectedAttributes')) || [];
+            rows.forEach(row => {
+                if (selectedAttributes.includes(row.cells[1].textContent)) {
+                    row.querySelector('td input[type="checkbox"]').checked = true;
+                }
+            });
+        }
+
+        function goBack() {
+            saveAttributes();
+            window.history.back();
+        }
+
+        window.onload = loadAttributes;
     </script>
 </body>
 </html>
